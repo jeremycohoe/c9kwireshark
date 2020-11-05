@@ -1,34 +1,45 @@
 
-# Pull container
 
+
+# Creating the container:
+## The steps below were followed to create the Dockerhub c9kwireshark repo at:
+
+[https://hub.docker.com/repository/docker/jeremycohoe/c9kwireshark](https://hub.docker.com/repository/docker/jeremycohoe/c9kwireshark)
+
+```
+# Pull container
 docker pull danielguerra/alpine-xfce4-xrdp
 
 # Run it and add wireshark
-
 docker run -d --name rdp -p 3390:3389 danielguerra/alpine-xfce4-xrdp
 
 # Connect with RDP and add wireshark
-### rdesktop localhost:3390
-### Log in with alpine:alpine
-### Install wireshark:
-
-```
+# # rdesktop localhost:3390
+# # Log in with alpine:alpine
+# # Install wireshark:
 sudo apk add wireshark
 sudo chown alpine.alpine /usr/bin/dumpcap
-```
 
-### commit container to new image:
-
+# commit container to new image:
 docker commit <container ID> c9kwireshark:latest
 
 # save image to tar:
-
 docker save -o c9kwireshark.tar <image ID>
 
+# push to Dockerhub
+```
+
+# Pull container:
+
+```
+docker pull jeremycohoe/c9kwireshark
+docker save -o c9kwireshark.tar  jeremycohoe/c9kwireshark
+```
+
 # copy c9kwireshark.tar to C9300 usbflash1
-
+```
 scp c9kwireshark.tar admin@10.1.1.5:usbflash1:/c9kwireshark.tar
-
+```
 # connect to C9300 IOS XE 17.3 and configure app hosting
 
 ### Set VLAN 47 and IP addresses as needed
